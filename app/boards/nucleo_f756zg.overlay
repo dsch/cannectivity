@@ -1,0 +1,29 @@
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include "../app.overlay"
+
+/ {
+	cannectivity: cannectivity {
+		compatible = "cannectivity";
+		timestamp-counter = <&counter2>;
+
+		channel0 {
+			compatible = "cannectivity-channel";
+			can-controller = <&can1>;
+			state-led = <&green_led>;
+			activity-leds = <&red_led>;
+		};
+	};
+};
+
+&can1 {
+	status = "okay";
+	pinctrl-0 = <&can1_rx_pd0 &can1_tx_pd1>;
+	pinctrl-names = "default";
+};
+
+&timers2 {
+	st,prescaler = <107>;
+	counter2: counter {
+		status = "okay";
+	};
+};
